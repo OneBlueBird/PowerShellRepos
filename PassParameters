@@ -1,1 +1,45 @@
 
+param($Environment, $Server, $Command);
+
+Set-ExecutionPolicy Unrestricted
+
+
+Write-Host ("Parameter value for Environment (from CLI) : " + $Environment);
+Write-Host ("Parameter value for Server (from CLI) : " + $Server);
+Write-Host ("Parameter value for Command (from CLI) : " + $Command);
+
+class StartupMain
+{
+    ## Property to store Environment
+    [string] $environment;
+
+    ## Property to store server
+    [string] $server;
+
+    ## Property to store command
+    [string] $command;
+
+    SetParameters($paramEnv, $paramServer, $paramCommand)
+    {
+        $this.environment = $paramEnv;
+        $this.server = $paramServer;
+        $this.command= $paramCommand;
+    }
+
+    PrintParameters()
+    {
+        Write-Host("Environment parameter assigned : " + $this.environment);
+        Write-Host("Server parameter assigned : " + $this.server);
+        Write-Host("Command parameter assigned : " + $this.command);
+    }
+}
+
+## Technique to instantiate a class
+[StartupMain]$varStartupMain = [StartupMain]::new();
+
+## Set all the parameters passed to StartupMain class
+$varStartupMain.SetParameters($Environment, $Server, $Command);
+
+## Let's print them here
+$varStartupMain.PrintParameters();
+Write-Host ("-------------------------------------------------");
